@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyExchange", "money-exchange_backend\MoneyExchange.csproj", "{FAE7299E-4D9B-4A9C-A333-3B6D7A7EA80C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyExchange", "MoneyExchange\MoneyExchange.csproj", "{FAE7299E-4D9B-4A9C-A333-3B6D7A7EA80C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money-exchange_backend.Tests", "money-exchange_backend.Tests\money-exchange_backend.Tests.csproj", "{139B4FF5-CF4C-4CC7-8524-1C8235847795}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyExchange.Tests", "MoneyExchange.Tests\MoneyExchange.Tests.csproj", "{139B4FF5-CF4C-4CC7-8524-1C8235847795}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyExchange.Model", "MoneyExchange.Model\MoneyExchange.Model.csproj", "{5A118602-B18E-4C83-A809-C309DCD39CC9}"
 EndProject

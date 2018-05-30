@@ -64,7 +64,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\money-exchange_backend\MoneyExchange.csproj">
+    <ProjectReference Include="..\MoneyExchange\MoneyExchange.csproj">
       <Project>{FAE7299E-4D9B-4A9C-A333-3B6D7A7EA80C}</Project>
       <Name>MoneyExchange</Name>
     </ProjectReference>
