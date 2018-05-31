@@ -7,23 +7,31 @@ using MoneyExchange.Model;
 
 namespace MoneyExchange.Data
 {
-    public class Repository
+    public class Repository : IRepository
     {
+        IMoneyExchangeContext context = new MoneyExchangeEntities();
+        
+        public Repository(IMoneyExchangeContext context)
+        {
+            this.context = context;
+        }
+
         public List<CurrencyDTO> GetCurrencies()
         {
             List<CurrencyDTO> currencies;
-            using (var context = new MoneyExchangeEntities())
-            {
+            //using (context = new MoneyExchangeEntities())
+            //{
                 currencies = context.Currencies.AsNoTracking()
                     .Select(c => new CurrencyDTO { Id = c.Id, Acronym = c.Acronym, Name = c.Name }).ToList();
-            }
+                context.Dispose();
+            //}
             return currencies;
         }
         public ConversionDTO GetCurrencyExchange(int? currencyId)
         {
             ConversionDTO currencyExchange;
-            using (var context = new MoneyExchangeEntities())
-            {
+            //using (context = new MoneyExchangeEntities())
+            //{
                 currencyExchange = 
                     context.Currencies.AsNoTracking()
                         .Where(c => c.Id == currencyId)
@@ -41,16 +49,16 @@ namespace MoneyExchange.Data
                             Rates = c.Conversions.ToDictionary(k => k.Key, v => v.Value),
                             Date = new DateTime()
                         }).FirstOrDefault();
-            }
-
+            //}
+            context.Dispose();
             return currencyExchange;
         }
 
         public UserDTO AuthenticateUser(Account account)
         {
             UserDTO user;
-            using (var context = new MoneyExchangeEntities())
-            {
+            //using (context = new MoneyExchangeEntities())
+            //{
                 user = context.Users.AsNoTracking()
                     .Where(u => u.Username == account.Username && u.Password == account.Password)
                     .Select(u => new UserDTO
@@ -60,9 +68,9 @@ namespace MoneyExchange.Data
                             LastName = u.LastName,
                             Username = u.Username
                         }).FirstOrDefault();
-            }
-
-            if(user == null)
+            //}
+            context.Dispose();
+            if (user == null)
             {
                 throw new Exception("User or password incorrect");
             }

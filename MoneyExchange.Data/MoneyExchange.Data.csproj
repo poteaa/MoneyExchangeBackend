@@ -55,6 +55,8 @@
     <Compile Include="Exchange.cs">
       <DependentUpon>MoneyExchangeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IMoneyExchangeContext.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="MoneyExchangeModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

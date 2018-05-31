@@ -11,8 +11,18 @@ namespace money_exchange_backend.Controllers
 {
     public class LoginController : ApiController
     {
-        private readonly Repository repository = new Repository();
+        private readonly IRepository repository;
         private HttpResponseMessage response = new HttpResponseMessage();
+
+        public LoginController()
+        {
+            this.repository = new Repository(new MoneyExchangeEntities());
+        }
+
+        public LoginController(IRepository repository)
+        {
+            this.repository = repository;
+        }
 
         [HttpPost]
         [Route("api/login")]

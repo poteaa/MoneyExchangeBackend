@@ -13,7 +13,7 @@ namespace MoneyExchange.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MoneyExchangeEntities : DbContext
+    public partial class MoneyExchangeEntities : DbContext, IMoneyExchangeContext
     {
         public MoneyExchangeEntities()
             : base("name=MoneyExchangeEntities")
@@ -24,7 +24,7 @@ namespace MoneyExchange.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<Exchange> Exchanges { get; set; }
         public virtual DbSet<User> Users { get; set; }
