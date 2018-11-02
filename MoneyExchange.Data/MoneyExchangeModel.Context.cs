@@ -10,6 +10,7 @@
 namespace MoneyExchange.Data
 {
     using System;
+    using System.Data.Common;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
@@ -19,7 +20,11 @@ namespace MoneyExchange.Data
             : base("name=MoneyExchangeEntities")
         {
         }
-    
+        public MoneyExchangeEntities(DbConnection connection)
+            : base(connection, contextOwnsConnection: true)
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

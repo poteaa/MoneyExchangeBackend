@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace money_exchange_backend.Tests
 {
-    public class MoneyExchangeAppContext: IMoneyExchangeContext
+    public class MoneyExchangeAppContext : DbContext, IMoneyExchangeContext
     {
-        public MoneyExchangeAppContext()
+        public MoneyExchangeAppContext() : base("name=MoneyExchangeEntities")
         {
             this.Currencies = new TestCurrencyDbSet();
             this.Exchanges = new TestExchangeDbSet();

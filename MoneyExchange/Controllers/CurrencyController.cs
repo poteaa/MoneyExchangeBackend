@@ -23,11 +23,17 @@ namespace money_exchange_backend.Controllers
         }
 
         [ResponseType(typeof(List<CurrencyDTO>))]
-        public List<CurrencyDTO> GetCurrencies()
+        public IHttpActionResult GetCurrencies()
         {
-            return repository.GetCurrencies();
-            //List<CurrencyDTO> currencies = repository.GetCurrencies();
-            //return Ok(currencies);
+            List<CurrencyDTO> currencies = repository.GetCurrencies();
+            return Ok(currencies);
+        }
+
+        [ResponseType(typeof(CurrencyDTO))]
+        public IHttpActionResult GetCurrency(int id)
+        {
+            CurrencyDTO currency = repository.GetCurrency(id);
+            return Ok(currency);
         }
     }
 }

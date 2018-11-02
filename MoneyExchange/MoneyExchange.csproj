@@ -98,9 +98,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ConversionController.cs" />
-    <Compile Include="Controllers\CurrencyController.cs" />
+    <Compile Include="Auth\CustomAuthorize.cs" />
+    <Compile Include="Auth\TokenGenerator.cs" />
+    <Compile Include="Auth\TokenStorage.cs" />
     <Compile Include="Controllers\ExchangeController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

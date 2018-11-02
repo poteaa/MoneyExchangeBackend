@@ -27,28 +27,70 @@ namespace MoneyExchange.Data
             //}
             return currencies;
         }
-        public ConversionDTO GetCurrencyExchange(int? currencyId)
+
+        public CurrencyDTO GetCurrency(int id)
+        {
+            CurrencyDTO currency = context.Currencies.AsNoTracking()
+                .Where(cs => cs.Id == id)
+                .Select(c => new CurrencyDTO { Id = c.Id, Acronym = c.Acronym, Name = c.Name }).FirstOrDefault();
+            context.Dispose();
+            return currency;
+        }
+
+        public ConversionDTO GetCurrencyExchange(string baseCurrencyAcronym, string targetCurrencyAcronym)
         {
             ConversionDTO currencyExchange;
             //using (context = new MoneyExchangeEntities())
             //{
-                currencyExchange = 
-                    context.Currencies.AsNoTracking()
-                        .Where(c => c.Id == currencyId)
-                        .Select(c => new
-                        {
-                            Acronym = c.Acronym,
-                            Conversions = c.Exchanges
-                                            .Where(e => e.srcCurrencyId == currencyId)
-                                            .Select(e => new { Key = e.Currency1.Acronym, Value = e.rate })
-                        })
-                        .AsEnumerable()
-                        .Select(c => new ConversionDTO
-                        {
-                            Base = c.Acronym,
-                            Rates = c.Conversions.ToDictionary(k => k.Key, v => v.Value),
-                            Date = new DateTime()
-                        }).FirstOrDefault();
+            var targetCurrency = context
+                    .Currencies.AsNoTracking()
+                    .Where(c => c.Acronym == targetCurrencyAcronym).FirstOrDefault();
+            
+            currencyExchange =
+                context
+                    .Currencies.AsNoTracking()
+                    .Where(c => c.Acronym == baseCurrencyAcronym).ToList()
+                    .Select(c => new
+                    {
+                        Acronym = c.Acronym,
+                        Conversions = c.Exchanges
+                                        .Where(e => e.srcCurrencyId == c.Id && e.trgtCurrencyId == targetCurrency.Id)
+                                        .Select(e => new { Key = e.Currency1.Acronym, Value = e.rate })
+                    })
+                    .AsEnumerable()
+                    .Select(c => new ConversionDTO
+                    {
+                        Base = c.Acronym,
+                        Rates = c.Conversions.ToDictionary(k => k.Key, v => v.Value),
+                        Date = new DateTime()
+                    }).FirstOrDefault();
+            //}
+            context.Dispose();
+            return currencyExchange;
+        }
+        
+        public ConversionDTO GetCurrencyExchanges(string baseCurrencyAcronym)
+        {
+            ConversionDTO currencyExchange;
+            //using (context = new MoneyExchangeEntities())
+            //{
+            currencyExchange =
+                context.Currencies.AsNoTracking()
+                    .Where(c => c.Acronym == baseCurrencyAcronym)
+                    .Select(c => new
+                    {
+                        Acronym = c.Acronym,
+                        Conversions = c.Exchanges
+                                        .Where(e => e.srcCurrencyId == c.Id)
+                                        .Select(e => new { Key = e.Currency1.Acronym, Value = e.rate })
+                    })
+                    .AsEnumerable()
+                    .Select(c => new ConversionDTO
+                    {
+                        Base = c.Acronym,
+                        Rates = c.Conversions.ToDictionary(k => k.Key, v => v.Value),
+                        Date = new DateTime()
+                    }).FirstOrDefault();
             //}
             context.Dispose();
             return currencyExchange;
@@ -70,10 +112,6 @@ namespace MoneyExchange.Data
                         }).FirstOrDefault();
             //}
             context.Dispose();
-            if (user == null)
-            {
-                throw new Exception("User or password incorrect");
-            }
             return user;
         }
     }
